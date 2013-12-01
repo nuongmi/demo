@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @*@Scripts.Render("~/bundles/modernizr")*@
+        <link href="~/Content/dhtmlxcalendar.css" rel="stylesheet" />
+        <link href="~/Content/dhtmlxcalendar_dhx_skyblue.css" rel="stylesheet" />
+        <script src="~/Scripts/dhtmlxcalendar.js"></script>
+
+
+
+        <script>
+            var myCalendar;
+            function doOnLoad() {
+                myCalendar = new dhtmlXCalendarObject(["calendar", "calendar2", "calendar3"]);
+                myCalendarRem = new dhtmlXCalendarObject("reminder");
+                myCalendarRem.setDateFormat("%d/%m/%Y %H:%i");
+            }
+
+	</script>
+    </head>
+    <body>
+        <header>
+                        @section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>   
+                            <div class="float-right">
+@*                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>*@
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Post", "User", "Home")</li>
+                            <li>@Html.ActionLink("Top user", "User", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+        </div>
+    </section>
+}
+        </header>
+        <div id="body">
+
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                 
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+       
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

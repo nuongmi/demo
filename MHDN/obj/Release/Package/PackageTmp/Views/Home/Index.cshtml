@@ -1,0 +1,101 @@
+﻿@using MHDN.Models
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                @*<h2>@ViewBag.Message</h2>*@
+            </hgroup>   
+                            <div class="float-right">
+@*                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>*@
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Post", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Top user", "User", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+        </div>
+    </section>
+}
+
+        @{
+            string accessToken = (string)ViewData["accessToken"];
+            //List<User> topMembers = (List<User>)ViewData["topMembers"];
+            List<Post> topPost = (List<Post>)ViewData["topPost"];
+            dynamic result = (dynamic)ViewData["result"];
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js?ver=1.6.1"></script>
+<script  type="text/javascript"  src="~/Scripts/getMoreData.js"></script>
+        <link href="~/Content/dhtmlxcalendar.css" rel="stylesheet" />
+        <link href="~/Content/dhtmlxcalendar_dhx_skyblue.css" rel="stylesheet" />
+        <script src="~/Scripts/dhtmlxcalendar.js"></script>
+<style>
+        input#startCalendar, input#endCalendar {
+            font-family: Tahoma;
+            font-size: 12px;
+            background-color: #fafafa;
+            border: #c0c0c0 1px solid;
+            width: 105px;
+        }
+        span.label {
+            font-family: Tahoma;
+            font-size: 12px;
+        }
+    </style>
+<h3>We suggest the following:</h3>
+<article id="content">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        @*<span class="editor-label">All time</span>*@<span class="editor-field" onclick="hideCalendar();">@Html.RadioButton("time", "all", true, "cdjkfjkd")</span><span class="label">All time </span><br />@*
+        <span class="editor-label">Span time</span>*@<span class="editor-field" onclick="createCalendar();">@Html.RadioButton("time", "span", false)</span><span class="label">Span time </span>
+    @*<div onclick="createCalendar();" onmouseover="" style="cursor: pointer;background-color:#edeff4;width:100px" id ="time">Choose time</div>*@
+    <div id ="dateTime">
+        <span class="label">From</span> @Html.TextBox("startCalendar")
+    <span class="label">Till</span> @Html.TextBox("endCalendar")
+    </div>
+        <hr />
+        @Html.RadioButton("type", "liked", true)<span class="label">Liked </span><br />
+        @Html.RadioButton("type", "comment", false)<span class="label">Comment</span><br />
+        <input type="submit" style="background-color:white; border:1px solid #dbdbdb" onclick="return testDateTime();" value="Submit" />
+       
+    }
+    <div id="post">
+            @if (topPost != null)
+            {
+                
+            		<div class="title"><p class="my_font">@ViewBag.Message</p></div>
+                   for (int i = 0; i < 10 && i < topPost.Count; i++)
+                   {
+                       var post = topPost[i];
+                    <div class="prod_box">#@i
+                        <a href="@post.from.link"><img src="@post.from.pictureUrl" alt="" title="" class="prod_img"/></a>
+                        <div class="prod_details"  style="font-size:13px">
+		                    <div>
+			                    <a href="@post.from.link" class="name_link">@post.from.name</a>
+			                    <p>@post.message</p>                       
+		                    </div>
+		                    <div class="count_LC">
+                               <img src="~/Images/like_icon.png" />
+		                    Like: @post.liked <a  style="color:#3b5998;text-decoration:none;" onclick="showComment('@post.id')">Comment: @post.comment</a>  <a  style="color:gray">@post.dateTime</a>
+		                    </div>
+                            <div id ="@post.id"></div>
+                        </div>                    
+                    </div> 
+					
+                   }
+                    <div class="clear"></div>
+
+               
+            }
+
+    <div id="fb-root"></div>
+        </div>
+
+</article>
+
+
